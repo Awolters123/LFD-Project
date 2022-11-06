@@ -15,7 +15,7 @@ Note: Please see the create_arg_parse function for a detailed description of eac
 
 Example:
 Running bert model with default parameters on standard dataset
-python3 lfd_assignment3.py -i "train.txt" -d "dev.txt" -t "test.tsv" -tf bert
+python3 lfd_assignment3.py -i "train.tsv" -d "dev.tsv" -t "test.tsv" -tf bert
 '''
 
 # Importing libraries
