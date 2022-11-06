@@ -11,34 +11,34 @@ This repository contains all the code used for our project, it consists of the f
     To reproduce our results for each experiment, execute the following commands in the terminal
     (A. trained/tested with normal data, B. trained and tested with masked data, C. trained with normal and tested with masked data):
     SVM baseline
-    - 1. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -svm_base
-    - 2. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -svm_base
-    - 3. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -svm_base
+    - A. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -svm_base
+    - B. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -svm_base
+    - C. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -svm_base
     
     SVM optimised:
-    - 1. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -svm_opt
-    - 2. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -svm_opt
-    - 3. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -svm_opt
+    - A. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -svm_opt
+    - B. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -svm_opt
+    - C. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -svm_opt
     
     LSTM:
-    - 1. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -lstm -lr 1e-3 -bs 32 -sl 50
-    - 2. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -lstm -lr 1e-3 -bs 32 -sl 50
-    - 3. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -lstm -lr 1e-3 -bs 32 -sl 50
+    - A. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -lstm -lr 1e-3 -bs 32 -sl 50
+    - B. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -lstm -lr 1e-3 -bs 32 -sl 50
+    - C. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -lstm -lr 1e-3 -bs 32 -sl 50
     
     transformers: BERT (bert-base-uncased):
-    - 1. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -tf bert -lr 1e-5 -bs 32 -sl 60 -epoch 2
-    - 2. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -tf bert -lr 1e-5 -bs 32 -sl 60 -epoch 2
-    - 3. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -tf bert -lr 1e-5 -bs 32 -sl 60 -epoch 2
+    - A. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -tf bert -lr 1e-5 -bs 32 -sl 60 -epoch 2
+    - B. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -tf bert -lr 1e-5 -bs 32 -sl 60 -epoch 2
+    - C. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -tf bert -lr 1e-5 -bs 32 -sl 60 -epoch 2
     
     transformers: RoBERTa (roberta-base):
-    - 1. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -tf roberta -lr 1e-5 -bs 32 -sl 80 -epoch 
-    - 2. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -tf roberta -lr 1e-5 -bs 16 -sl 80 -epoch 2
-    - 3. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -tf roberta -lr 1e-5 -bs 16 -sl 80 -epoch 2
+    - A. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -tf roberta -lr 1e-5 -bs 32 -sl 80 -epoch 
+    - B. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -tf roberta -lr 1e-5 -bs 16 -sl 80 -epoch 2
+    - C. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -tf roberta -lr 1e-5 -bs 16 -sl 80 -epoch 2
     
     transformers: DeBERTa (microsoft/deberta-v3-base):
-    - 1. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -tf deberta -lr 1e-5 -bs 32 -sl 70 -epoch 2
-    - 2. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -tf deberta -lr 1e-5 -bs 32 -sl 70 -epoch 2
-    - 3. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -tf deberta -lr 1e-5 -bs 32 -sl 70 -epoch 2
+    - A. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -tf deberta -lr 1e-5 -bs 32 -sl 70 -epoch 2
+    - B. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -tf deberta -lr 1e-5 -bs 32 -sl 70 -epoch 2
+    - C. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -tf deberta -lr 1e-5 -bs 32 -sl 70 -epoch 2
 
 - results.pdf, this file contains the results we obtained by running the models with the described dataset and script. It has the classifcation report and the confusion matrix for each model on the test set (1. SVM baseline, 2. SVM optimised, 3. LSTM, 4. transformers: bert, roberta, and deberta).
 
