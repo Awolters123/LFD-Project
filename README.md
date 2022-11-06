@@ -3,12 +3,44 @@
 This repository contains all the code used for our project, it consists of the following files:
 - data folder, which contains the the train, dev, and test files, as well as the marked versions. It also contains the used lexicons for creation of the masked dataset, and finally it has the glove_reviews.json file, which is mandatory to run the LSTM model.
 
-- lfd_project.py, this is the python3 file which runs all the models we used for our project with terminal arguments. It can be used with the normal and masked data. To run this python script, the following three libraries have to be installed: transformers, sentencepiece, and emoji. To install these run the following command before executing the script: 
+- lfd_project.py, this is the python3 file which runs all the models we used for our project with terminal arguments. It can be used with the normal and masked data or with new data in the same format. To run this python script, the following three libraries have to be installed: transformers, sentencepiece, and emoji. To install these run the following command before executing the script: 
     - pip install transformers
     - pip install sentencepiece
     - pip install emoji
+    
+    To reproduce our results for each experiment, execute the following commands in the terminal
+    (1. trained/tested with normal data, 2. trained and tested with masked data, 3. trained with normal and tested with masked data):
+    SVM baseline
+    - 1. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -svm_base
+    - 2. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -svm_base
+    - 3. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -svm_base
+    
+    SVM optimised:
+    - 1. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -svm_opt
+    - 2. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -svm_opt
+    - 3. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -svm_opt
+    
+    LSTM:
+    - 1. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -lstm -lr 1e-3 -bs 32 -sl 50
+    - 2. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -lstm -lr 1e-3 -bs 32 -sl 50
+    - 3. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -lstm -lr 1e-3 -bs 32 -sl 50
+    
+    transformers: BERT (bert-base-uncased):
+    - 1. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -tf bert -lr 1e-5 -bs 32 -sl 60 -epoch 2
+    - 2. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -tf bert -lr 1e-5 -bs 32 -sl 60 -epoch 2
+    - 3. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -tf bert -lr 1e-5 -bs 32 -sl 60 -epoch 2
+    
+    transformers: RoBERTa (roberta-base):
+    - 1. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -tf roberta -lr 1e-5 -bs 32 -sl 80 -epoch 
+    - 2. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -tf roberta -lr 1e-5 -bs 16 -sl 80 -epoch 2
+    - 3. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -tf roberta -lr 1e-5 -bs 16 -sl 80 -epoch 2
+    
+    transformers: DeBERTa (microsoft/deberta-v3-base):
+    - 1. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -tf deberta -lr 1e-5 -bs 32 -sl 70 -epoch 2
+    - 2. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -tf deberta -lr 1e-5 -bs 32 -sl 70 -epoch 2
+    - 3. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -tf deberta -lr 1e-5 -bs 32 -sl 70 -epoch 2
 
-- results.pdf, this file contains the results we obtained by running the models with the described dataset and script. It has the classifcation report and the confusion matrix for each model (1. SVM baseline, 2. SVM optimised, 3. LSTM, 4. transformers: bert, roberta, and deberta).
+- results.pdf, this file contains the results we obtained by running the models with the described dataset and script. It has the classifcation report and the confusion matrix for each model on the test set (1. SVM baseline, 2. SVM optimised, 3. LSTM, 4. transformers: bert, roberta, and deberta).
 
 
 
