@@ -21,21 +21,21 @@ This repository contains all the code used for our project, it consists of the f
     - C. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -svm_opt
     
     LSTM:
-    - A. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -lstm -lr 1e-3 -bs 32 -sl 50
-    - B. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -lstm -lr 1e-3 -bs 32 -sl 50
-    - C. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -lstm -lr 1e-3 -bs 32 -sl 50
+    - A. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -e glove_reviews.json -lstm -lr 1e-3 -bs 32 -sl 50
+    - B. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t -e glove_reviews.json test_mask.csv -lstm -lr 1e-3 -bs 32 -sl 50
+    - C. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t -e glove_reviews.json test.tsv -lstm -lr 1e-3 -bs 32 -sl 50
     
-    transformers: BERT (bert-base-uncased):
+    BERT (bert-base-uncased):
     - A. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -tf bert -lr 1e-5 -bs 32 -sl 60 -epoch 2
     - B. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -tf bert -lr 1e-5 -bs 32 -sl 60 -epoch 2
     - C. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -tf bert -lr 1e-5 -bs 32 -sl 60 -epoch 2
     
-    transformers: RoBERTa (roberta-base):
+    RoBERTa (roberta-base):
     - A. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -tf roberta -lr 1e-5 -bs 32 -sl 80 -epoch 
     - B. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -tf roberta -lr 1e-5 -bs 16 -sl 80 -epoch 2
     - C. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -tf roberta -lr 1e-5 -bs 16 -sl 80 -epoch 2
     
-    transformers: DeBERTa (microsoft/deberta-v3-base):
+    DeBERTa (microsoft/deberta-v3-base):
     - A. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -tf deberta -lr 1e-5 -bs 32 -sl 70 -epoch 2
     - B. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -tf deberta -lr 1e-5 -bs 32 -sl 70 -epoch 2
     - C. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test.tsv -tf deberta -lr 1e-5 -bs 32 -sl 70 -epoch 2
