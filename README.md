@@ -9,7 +9,7 @@ This repository contains all the code used for our project, it consists of the f
     - pip install emoji
     
     To reproduce our results for each experiment, execute the following commands in the terminal
-    (1. trained/tested with normal data, 2. trained and tested with masked data, 3. trained with normal and tested with masked data):
+    (A. trained/tested with normal data, B. trained and tested with masked data, C. trained with normal and tested with masked data):
     SVM baseline
     - 1. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -svm_base
     - 2. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -svm_base
