@@ -1,7 +1,7 @@
 # Learning From Data Project Repository 
 
 This repository contains all the code used for our project, it consists of the following files:
-- data folder, which contains the the train, dev, and test files, as well as the marked versions. It also contains the used lexicons for creation of the masked dataset, and finally it has the glove_reviews.json file, which is mandatory if you want to run the LSTM model.
+- data folder, which contains the the train, dev, and test files, as well as the marked versions. It also contains the used lexicons for creation of the masked dataset, and finally it has the glove embedding file, which is mandatory if you want to run the LSTM model.
 
 - lfd_project.py, this is the python3 file which runs all the models we used for our project with terminal arguments. It can be used with the normal and masked data or with new data in the same format. To run this python script, the following three libraries have to be installed: transformers, sentencepiece, and emoji. To install these run the following commands before executing the script: 
     - pip install transformers
