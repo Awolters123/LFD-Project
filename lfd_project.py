@@ -13,8 +13,9 @@ Usage:
 python3 lfd_assignment3.py -i -d -t -e -svm_base -svm_opt -lstm -tf -lr -bs -sl -epoch
 Note: Please see the create_arg_parse function for a detailed description of each argument!
 
-Examples:
-python3 lfd_assignment3.py -i "train.txt" -d "dev.txt" -t "test.tsv"
+Example:
+Running bert model with default parameters on standard dataset
+python3 lfd_assignment3.py -i "train.txt" -d "dev.txt" -t "test.tsv" -tf bert
 '''
 
 # Importing libraries
@@ -54,6 +55,7 @@ np.random.seed(1234)
 tensorflow.random.set_seed(1234)
 python_random.seed(1234)
 
+
 #############
 # Helper functions, (e.g. create arguments, reading data/embeddings, plotting confusion matrix)
 def create_arg_parser():
@@ -62,13 +64,13 @@ def create_arg_parser():
     parser = argparse.ArgumentParser()
     # Data input arguments
     parser.add_argument("-i", "--train_file", default="train.tsv", type=str,
-                        help="Input file to learn from (default train.txt)")
+                        help="Training the model with this data file (default train.tsv)")
     parser.add_argument("-d", "--dev_file", default="dev.tsv", type=str,
-                        help="Separate dev set to optimise (default dev.txt)")
+                        help="Validating the model with this data file (default dev.tsv)")
     parser.add_argument("-t", "--test_file", default="test.tsv", type=str,
-                        help="Separate test set to evaluate performance of the models")
+                        help="Evaluating the model with this data file (default test.tsv)")
     parser.add_argument("-e", "--embeddings", default='glove_reviews.json', type=str,
-                        help="Embedding file we are using (default glove_reviews.json)")
+                        help="Embedding file used as embedding layer for LSTM (default glove_reviews.json)")
 
     # Model arguments
     parser.add_argument("-svm_base", "--svm_baseline", action='store_true',
@@ -79,7 +81,7 @@ def create_arg_parser():
                              "and parameters, cannot be used with parameter arguments")
     parser.add_argument("-lstm", "--lstm", action='store_true',
                         help="This argument runs the lstm model, you can specify the parameters: learning rate, "
-                             "batch size, and maximum sequence length")
+                             "batch size, and sequence length")
     parser.add_argument("-tf", "--transformer", default="bert", type=str,
                         help="This argument runs the pretrained language models, you can choose between: "
                              "bert (bert-base-uncased), roberta (robert-base), and deberta (microsoft/deberta-v3-base),"
@@ -92,14 +94,21 @@ def create_arg_parser():
     parser.add_argument("-bs", "--batch_size", default=8, type=int,
                         help="Set a custom batch size for the LSTM or transformer model default is 8")
     parser.add_argument("-sl", "--sequence_length", default=100, type=int,
-                        help="This argument can only be used with the -tf argument, "
-                             "it allows for a custom maximum sequence length for the transformer model, default 100")
+                        help="Set a custom maximum sequence length for the LSTM or transformer model default is 100")
     parser.add_argument("-epoch", "--epochs", default=1, type=int,
-                        help="This argument selects the amount of epochs to run the model with,"
-                             "default is 1 epoch")
+                        help="This argument selects the amount of epochs to run the model with, default is 1 epoch")
 
     args = parser.parse_args()
     return args
+
+
+def heatmap(cf, color):
+    """Create heatmap confusion matrix"""
+    labels = ['Not Offensive', 'Offensive']
+    sns.heatmap(cf, annot=True, fmt='g', cmap=color, xticklabels=labels, yticklabels=labels)
+    plot.xlabel("Predicted Label")
+    plot.ylabel("True Label")
+    plot.show()
 
 
 def read_corpus(corpus_file):
@@ -125,7 +134,7 @@ def read_csv(corpus_file):
 
 
 def preprocessing(text):
-    '''Preprocessing the text , by converting emojis to their textual value'''
+    '''Preprocessing the text, by converting emojis to their textual value'''
     documents = []
     for line in text:
         line = emoji.demojize(line)
@@ -156,11 +165,11 @@ def get_emb_matrix(voc, emb):
     return embedding_matrix
 
 
-######################
+#############
 # SVM baseline part
 def svm_baseline(X_train, Y_train, X_test, Y_test):
-    """This function takes as input the train, dev and test set with their label sets.
-    It trains a linear SVM model with a TF-IDF vectorizer used as baseline on the training data and returns predictions on the dev and test set"""
+    '''This function takes as input the train, dev and test set with their label sets.
+    It trains a linear SVM model with a TF-IDF vectorizer used as baseline on the training data and returns predictions on the dev and test set'''
     print("Running SVM baseline...")
     # Create TF-IDF vectorizer
     vectorizer = TfidfVectorizer()
@@ -184,9 +193,10 @@ def svm_baseline(X_train, Y_train, X_test, Y_test):
     # Present classification report for dev set with precison, recall and F1 per label
     print(classification_report(Y_test, pred_test, target_names=unique_labels, digits=3))
     print(confusion_matrix(Y_test, pred_test))
+    heatmap(confusion_matrix(Y_test, pred_test), "Blues")
 
 
-######################
+#############
 # SVM optimised part
 def get_best_parameter_settings(X_train, Y_train, X_dev, Y_dev):
     '''This function takes as input the train, dev and test set with their label sets.
@@ -274,9 +284,10 @@ def svm_optimized(X_train, Y_train, X_dev, Y_dev, X_test, Y_test):
     # Print classification report
     print(classification_report(Y_test, predictions, digits=3))
     print(confusion_matrix(Y_test, predictions))
+    heatmap(confusion_matrix(Y_test, predictions), "Blues")
 
 
-#######################
+#############
 # LSTM part
 def create_lstm(lr, emb_matrix):
     '''Create the Keras model to use'''
@@ -332,10 +343,11 @@ def test_lstm(model, X_test, Y_test, ident):
     Y_test = np.argmax(Y_test, axis=1)
     print("Classification Report:\n", classification_report(Y_test, Y_pred, digits=3))
     print(confusion_matrix(Y_test, Y_pred))
+    heatmap(confusion_matrix(Y_test, Y_pred), "Blues")
 
 
 def lstm(lr, bs, sl, X_train, Y_train, X_test, Y_test):
-    ''' Calling the create, train, and test functions to run the whole LSTM model'''
+    '''Calling the create, train, and test functions to run the whole LSTM model'''
     # Read embeddings
     embeddings = read_embeddings("glove_reviews.json")
 
@@ -374,11 +386,11 @@ def lstm(lr, bs, sl, X_train, Y_train, X_test, Y_test):
     test_lstm(model, X_test_vect, Y_test_bin, "test")
 
 
-##################
+#############
 # Transformer part
 def train_transformer(lm, epoch, bs, lr, sl, X_train, Y_train, X_dev, Y_dev):
-    """This function takes as input the train file, dev file, transformer model name, and parameters.
-    It trains the model with the specified parameters and returns the trained model"""
+    '''This function takes as input the train file, dev file, transformer model name, and parameters.
+    It trains the model with the specified parameters and returns the trained model'''
     print("Training model: {}\nWith parameters:\nLearn rate: {}, Batch size: {}\nEpochs: {}, Sequence length: {}"
           .format(lm, lr, bs, epoch, sl))
     # Selecting the correct tokenizer for the model, and selecting the model
@@ -411,8 +423,8 @@ def train_transformer(lm, epoch, bs, lr, sl, X_train, Y_train, X_dev, Y_dev):
 
 
 def test_transformer(lm, epoch, bs, lr, sl, model, X_test, Y_test, ident):
-    """This function takes as input the trained transformer model, name of the model, parameters, and the test files,
-    and predicts the labels for the test set and returns the accuracy score with a summarization of the model"""
+    '''This function takes as input the trained transformer model, name of the model, parameters, and the test files,
+    and predicts the labels for the test set and returns the accuracy score with a summarization of the model'''
     print("Testing model: {} on {} set\nWith parameters:\nLearn rate: {}, Batch size: {}\nEpochs: {}, "
           "Sequence length: {}".format(lm, ident, lr, bs, epoch, sl))
     # Selecting the correct tokenizer for the model, and applying it to the test set
@@ -436,6 +448,7 @@ def test_transformer(lm, epoch, bs, lr, sl, model, X_test, Y_test, ident):
     # Printing classification report (rounding on 3 decimals)
     print("Classification Report on {} set:\n{}".format(ident, classification_report(gold, pred, digits=3)))
     print(confusion_matrix(gold, pred))
+    heatmap(confusion_matrix(gold, pred), "Blues")
 
 
 ##############################################################################
@@ -465,7 +478,12 @@ def main():
     else:
         X_test, Y_test = read_corpus(args.test_file)
 
-    # Running the different models, by checking if their matching argument is true
+    # Preprocess the text
+    X_train = preprocessing(X_train)
+    X_dev = preprocessing(X_dev)
+    X_test = preprocessing(X_test)
+
+    # Running the different models by checking if their matching argument is true
     if args.svm_baseline:
         svm_baseline(X_train, Y_train, X_test, Y_test)
 
@@ -489,4 +507,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
