@@ -10,6 +10,7 @@ This repository contains all the code used for our project, it consists of the f
     
     To reproduce our results for each experiment, execute the following commands in the terminal
     (A. trained/tested with standard data, B. trained and tested with masked data, C. trained with masked and tested on standard data):
+    
     SVM baseline
     - A. python3 lfd_project.py -i train.tsv -d dev.tsv -t test.tsv -svm_base
     - B. python3 lfd_project.py -i train_mask.csv -d dev_mask.csv -t test_mask.csv -svm_base
